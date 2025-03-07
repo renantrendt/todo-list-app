@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" href="data:;base64,=">
+    <link rel="stylesheet" href="style.css">
+    <title>Lista de Tarefas</title>
+</head>
+<body>
+    <div class="main-container">
+        <div class="container">
+            <h1>Lista de Tarefas</h1>
+            <input type="text" id="taskInput" placeholder="Adicione uma nova tarefa...">
+            <button id="addTaskBtn">Adicionar</button>
+            <ul id="taskList"></ul>
+        </div>
+        
+        <div class="fixed-container">
+            <h2>Atividades Fixas</h2>
+            <ul id="fixedTaskList"></ul>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="js/main.js"></script>
+    <script>
+        document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>');
+    </script>
+</body>
+</html>

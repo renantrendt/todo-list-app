@@ -1,0 +1,21 @@
+{
+    "name": "todo-list-app",
+    "version": "1.0.0",
+    "description": "Um aplicativo de lista de tarefas",
+    "type": "module",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js",
+        "dev": "bun run --watch app.js",
+        "vercel-build": "echo 'Build step completed'"
+    },
+    "dependencies": {
+        "@supabase/supabase-js": "^2.49.1",
+        "express": "^4.21.2",
+        "livereload": "latest",
+        "sortablejs": "latest"
+    },
+    "engines": {
+        "node": ">=18.x"
+    }
+}

@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001; // Alterado para porta 3001 para evitar conflitos
 const PUBLIC_DIR = join(__dirname, 'public');
 
 // Servir arquivos estáticos da pasta public
@@ -21,14 +21,21 @@ app.get('/', (req, res) => {
 
 // Iniciar o servidor
 if (process.env.NODE_ENV !== 'production') {
-  // Em desenvolvimento, adicionar LiveReload
-  try {
-    const livereload = await import('livereload');
-    const lrServer = livereload.createServer();
-    lrServer.watch(PUBLIC_DIR);
-    console.log('LiveReload ativado para a pasta public/');
-  } catch (err) {
-    console.log('LiveReload não disponível:', err.message);
+  // Em desenvolvimento, adicionar LiveReload (opcional)
+  // Desativado por padrão para evitar conflitos de porta
+  const enableLiveReload = false; // Altere para true se quiser ativar o LiveReload
+  
+  if (enableLiveReload) {
+    try {
+      const livereload = await import('livereload');
+      const lrServer = livereload.createServer({
+        port: 35730 // Porta alternativa para evitar conflitos
+      });
+      lrServer.watch(PUBLIC_DIR);
+      console.log('LiveReload ativado para a pasta public/ na porta 35730');
+    } catch (err) {
+      console.log('LiveReload não disponível:', err.message);
+    }
   }
 }
 

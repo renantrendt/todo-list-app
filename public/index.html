@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="icon" href="data:;base64,=">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjM2NmYxIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgY2xhc3M9ImZlYXRoZXIgZmVhdGhlci1jaGVjay1zcXVhcmUiPjxwb2x5bGluZSBwb2ludHM9IjkgMTEgMTIgMTQgMjIgNCIvPjxwYXRoIGQ9Ik0yMSAxMnY3YTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yVjVhMiAyIDAgMCAxIDItMmgxMSIvPjwvc3ZnPg==">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
     <link rel="stylesheet" href="style.css">
     <title>Lista de Tarefas</title>
 </head>
@@ -11,8 +16,10 @@
     <div class="main-container">
         <div class="container">
             <h1>Lista de Tarefas</h1>
-            <input type="text" id="taskInput" placeholder="Adicione uma nova tarefa...">
-            <button id="addTaskBtn">Adicionar</button>
+            <div class="input-group">
+                <input type="text" id="taskInput" placeholder="Adicione uma nova tarefa...">
+                <button id="addTaskBtn"><i class="ri-add-line"></i> Adicionar</button>
+            </div>
             <ul id="taskList"></ul>
         </div>
         
@@ -22,11 +29,12 @@
         </div>
     </div>
     
+    <footer class="app-footer">
+        <p>Desenvolvido com <i class="ri-heart-fill heart-icon"></i> | <span class="year">2025</span></p>
+    </footer>
+    
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script type="module" src="js/main.js"></script>
-    <script>
-        document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>');
-    </script>
 </body>
 </html>

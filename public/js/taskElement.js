@@ -111,9 +111,29 @@ export function createTaskElement(taskData) {
     
     // Criar botão de fixar
     const pinBtn = document.createElement('button');
-    pinBtn.innerHTML = isPinned ? '🔓' : '📌'; // ícone baseado no estado
     pinBtn.classList.add('pin-btn');
     pinBtn.title = isPinned ? 'Desafixar atividade' : 'Fixar atividade';
+    
+    // Criar um span para o ícone do alfinete
+    const pinIcon = document.createElement('span');
+    pinIcon.textContent = '📌';
+    pinIcon.style.position = 'relative';
+    pinIcon.style.display = 'inline-block';
+    pinBtn.appendChild(pinIcon);
+    
+    // Se estiver fixado, adicionar o X sobreposto
+    if (isPinned) {
+        const crossIcon = document.createElement('span');
+        crossIcon.textContent = '✕';
+        crossIcon.style.position = 'absolute';
+        crossIcon.style.top = '0px';
+        crossIcon.style.right = '0px';
+        crossIcon.style.fontSize = '0.8em';
+        crossIcon.style.color = '#000';
+        crossIcon.style.fontWeight = 'bold';
+        pinIcon.appendChild(crossIcon);
+    }
+    
     pinBtn.onclick = async function() {
         const fixedTaskList = document.getElementById('fixedTaskList');
         const taskList = document.getElementById('taskList');
@@ -123,13 +143,34 @@ export function createTaskElement(taskData) {
         if (li.parentElement === fixedTaskList) {
             li.classList.remove('pinned');
             taskList.appendChild(li);
-            pinBtn.innerHTML = '📌';
+            pinBtn.innerHTML = '';
+            const pinIcon = document.createElement('span');
+            pinIcon.textContent = '📌';
+            pinBtn.appendChild(pinIcon);
             pinBtn.title = 'Fixar atividade';
         } else {
             // Move para a lista de fixados
             li.classList.add('pinned');
             fixedTaskList.appendChild(li);
-            pinBtn.innerHTML = '🔓'; // ícone de cadeado
+            
+            // Recriar o botão com o X sobreposto
+            pinBtn.innerHTML = '';
+            const pinIcon = document.createElement('span');
+            pinIcon.textContent = '📌';
+            pinIcon.style.position = 'relative';
+            pinIcon.style.display = 'inline-block';
+            
+            const crossIcon = document.createElement('span');
+            crossIcon.textContent = '✕';
+            crossIcon.style.position = 'absolute';
+            crossIcon.style.top = '0px';
+            crossIcon.style.right = '0px';
+            crossIcon.style.fontSize = '0.8em';
+            crossIcon.style.color = '#000';
+            crossIcon.style.fontWeight = 'bold';
+            
+            pinIcon.appendChild(crossIcon);
+            pinBtn.appendChild(pinIcon);
             pinBtn.title = 'Desafixar atividade';
         }
         

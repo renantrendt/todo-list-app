@@ -1,4 +1,4 @@
-import { updateAllTaskPositions } from './taskManager.js';
+import { updateAllTaskPositions } from './taskPositioning.js';
 
 // Inicializar Sortable.js para as listas de tarefas
 export function initializeSortable() {
@@ -8,7 +8,20 @@ export function initializeSortable() {
         handle: '.drag-handle',
         animation: 150,
         group: 'tasks',
-        onEnd: function() {
+        ghostClass: 'sortable-ghost',
+        chosenClass: 'sortable-chosen',
+        dragClass: 'sortable-drag',
+        forceFallback: true,
+        fallbackClass: 'sortable-fallback',
+        fallbackOnBody: true,
+        swapThreshold: 0.65,
+        onStart: function(evt) {
+            document.body.style.cursor = 'grabbing';
+            console.log('Drag started', evt.item);
+        },
+        onEnd: function(evt) {
+            document.body.style.cursor = '';
+            console.log('Drag ended', evt.item);
             // Atualizar posições no banco de dados após arrastar e soltar
             updateAllTaskPositions();
         }
@@ -20,9 +33,26 @@ export function initializeSortable() {
         handle: '.drag-handle',
         animation: 150,
         group: 'tasks',
-        onEnd: function() {
+        ghostClass: 'sortable-ghost',
+        chosenClass: 'sortable-chosen',
+        dragClass: 'sortable-drag',
+        forceFallback: true,
+        fallbackClass: 'sortable-fallback',
+        fallbackOnBody: true,
+        swapThreshold: 0.65,
+        onStart: function(evt) {
+            document.body.style.cursor = 'grabbing';
+            console.log('Drag started in fixed list', evt.item);
+        },
+        onEnd: function(evt) {
+            document.body.style.cursor = '';
+            console.log('Drag ended in fixed list', evt.item);
             // Atualizar posições no banco de dados após arrastar e soltar
             updateAllTaskPositions();
         }
     });
+
+    // Adicionar logs para depuração
+    console.log('Sortable inicializado com sucesso!');
+    console.log('Elementos de arrasto encontrados:', document.querySelectorAll('.drag-handle').length);
 }

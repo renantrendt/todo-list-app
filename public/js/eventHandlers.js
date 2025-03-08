@@ -1,4 +1,4 @@
-import { addTask, saveChangesAndConvert } from './taskManager.js';
+import { addTask, saveChangesAndConvert } from './taskOperations.js';
 
 // Inicializar eventos
 export function initializeEventHandlers() {

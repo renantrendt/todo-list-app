@@ -66,6 +66,7 @@ body {
     max-width: 1200px;
     margin: 20px auto;
     gap: 24px;
+    flex-wrap: wrap;
 }
 
 .container, .fixed-container {
@@ -82,6 +83,7 @@ body {
 
 .container {
     flex: 2;
+    min-width: 300px;
 }
 
 .fixed-container {
@@ -91,6 +93,13 @@ body {
     /* Estilizar a barra de rolagem */
     scrollbar-width: thin;
     scrollbar-color: var(--primary-light) transparent;
+    width: 100%;
+    min-width: 300px;
+    max-width: 100%;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .fixed-container::-webkit-scrollbar {
@@ -125,6 +134,7 @@ h1 {
 h2 {
     font-size: 1.8rem;
     margin-top: 0;
+    flex-shrink: 0;
 }
 
 .input-group {
@@ -177,6 +187,7 @@ h2 {
 ul {
     list-style-type: none;
     padding: 0;
+    width: 100%;
 }
 
 li {
@@ -191,6 +202,12 @@ li {
     border: 1px solid var(--border-color);
     transition: var(--transition);
     box-shadow: 0 4px 12px var(--shadow-color);
+    position: relative;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+    overflow-wrap: break-word;
 }
 
 li:hover {
@@ -205,8 +222,13 @@ li input[type="text"] {
     font-size: 1rem;
     padding: 8px;
     border-radius: 6px;
-    flex: 1;
     min-width: 0;
+    flex: 1;
+    overflow: visible;
+    white-space: normal;
+    word-wrap: break-word;
+    text-overflow: clip;
+    box-sizing: border-box;
 }
 
 li input[type="text"]:focus {
@@ -220,7 +242,7 @@ li input[type="text"]:focus {
     gap: 8px;
 }
 
-.pin-btn, .delete-btn {
+.pin-btn, .delete-btn, .drag-handle {
     background: none;
     border: none;
     cursor: pointer;
@@ -234,7 +256,7 @@ li input[type="text"]:focus {
     justify-content: center;
 }
 
-.pin-btn:hover, .delete-btn:hover {
+.pin-btn:hover, .delete-btn:hover, .drag-handle:hover {
     background: rgba(99, 102, 241, 0.1);
     color: var(--primary-color);
 }
@@ -261,6 +283,61 @@ li input[type="text"]:focus {
 }
 
 /* Media queries para responsividade */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .fixed-container {
+        min-width: 300px;
+        max-width: 350px;
+    }
+    
+    .main-container {
+        gap: 20px;
+    }
+}
+
+/* Ajustes para orientação paisagem em dispositivos móveis */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    .main-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+    
+    .container {
+        flex: 2;
+        min-width: 60%;
+    }
+    
+    .fixed-container {
+        flex: 1;
+        min-width: 35%;
+        order: 0;
+        max-height: 80vh;
+    }
+}
+
+/* Para telas muito pequenas (smartphones compactos) */
+@media screen and (max-width: 360px) {
+    body {
+        padding: 8px;
+    }
+    
+    .container, .fixed-container {
+        padding: 12px;
+    }
+    
+    h2 {
+        font-size: 1.2rem;
+    }
+    
+    li {
+        padding: 10px;
+    }
+    
+    .pin-btn, .delete-btn, .drag-handle {
+        padding: 6px;
+        font-size: 1rem;
+    }
+}
 @media screen and (max-width: 768px) {
     .main-container {
         flex-direction: column;
@@ -269,6 +346,14 @@ li input[type="text"]:focus {
     .container, .fixed-container {
         margin-bottom: 24px;
         width: 100%;
+        max-width: 100%;
+        padding: 24px;
+    }
+    
+    .fixed-container {
+        max-height: 500px;
+        order: 2; /* Move fixed container below the main container on mobile */
+        box-shadow: 0 4px 20px var(--shadow-color);
     }
     
     h1 {
@@ -278,25 +363,59 @@ li input[type="text"]:focus {
     h2 {
         font-size: 1.5rem;
     }
+    
+    #fixedTaskList {
+        margin-top: 16px;
+    }
 }
 
 @media screen and (max-width: 480px) {
     body {
-        padding: 16px;
+        padding: 12px;
+    }
+    
+    .main-container {
+        margin: 10px auto;
+        gap: 16px;
     }
     
     .container, .fixed-container {
-        padding: 20px;
+        padding: 16px;
+        border-radius: var(--border-radius);
+        margin-bottom: 16px;
+    }
+    
+    .fixed-container {
+        max-height: 400px;
+        padding-bottom: 24px;
     }
     
     #taskInput, #addTaskBtn {
         padding: 12px;
     }
     
+    #addTaskBtn {
+        white-space: nowrap;
+    }
+    
     li {
         padding: 12px;
         flex-direction: column;
         align-items: flex-start;
+        margin: 8px 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    li input[type="text"] {
+        font-size: 0.95rem;
+        margin-bottom: 8px;
+        overflow: visible;
+        white-space: normal;
+        word-wrap: break-word;
+        box-sizing: border-box;
+        flex: 1;
     }
     
     .task-actions {
@@ -307,6 +426,87 @@ li input[type="text"]:focus {
     
     .duration-input {
         margin-top: 8px;
+    }
+    
+    #fixedTaskList li input[type="text"] {
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+        overflow: visible;
+        white-space: normal;
+        word-wrap: break-word;
+        box-sizing: border-box;
+        flex: 1;
+    }
+    
+    /* Melhorar layout dos botões em telas pequenas */
+    #fixedTaskList li button {
+        padding: 6px 8px;
+        font-size: 0.9rem;
+        margin-top: 4px;
+    }
+    
+    /* Estilos do drag-handle já definidos no JavaScript e no CSS global */
+    
+.inputs-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+    margin-right: 40px; /* Espaço para o drag handle */
+}
+
+/* Para dispositivos móveis */
+@media screen and (max-width: 480px) {
+    .inputs-wrapper {
+        flex-direction: column;
+    }
+    
+    li input[type="text"] {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+}
+
+/* Para telas médias (tablets e notebooks pequenos) */
+@media screen and (min-width: 481px) and (max-width: 1024px) {
+    .main-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .container, .fixed-container {
+        min-width: 45%;
+        flex: 1 1 45%;
+    }
+    
+    li input[type="text"] {
+        width: 45%;
+    }
+}
+
+/* Para telas grandes (desktops) */
+@media screen and (min-width: 1025px) {
+    .main-container {
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+    
+    .container {
+        flex: 2;
+    }
+    
+    .fixed-container {
+        flex: 1;
+    }
+    
+    li input[type="text"] {
+        width: 45%;
+    }
+}
+    
+    h2 {
+        font-size: 1.3rem;
+        margin-bottom: 16px;
     }
 }
 
@@ -340,6 +540,33 @@ li input[type="text"]:focus {
     margin-right: 5px;
     font-size: 1.1rem;
     vertical-align: middle;
+}
+
+/* Estilos para o elemento de arrasto */
+.drag-handle {
+    cursor: grab;
+    margin-right: 5px;
+    user-select: none;
+    touch-action: none;
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    display: inline-block;
+    padding: 0 8px;
+    z-index: 10;
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+}
+
+.sortable-ghost {
+    opacity: 0.5;
+    background: var(--primary-light) !important;
+}
+
+.sortable-chosen {
+    background: var(--card-bg);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Melhorias adicionais */

@@ -1,3 +1,4 @@
+// Arquivo principal que importa todos os módulos necessários
 import { initializeEventHandlers } from './eventHandlers.js';
 import { initializeSortable } from './sortable.js';
 import { loadTasksFromDatabase } from './taskOperations.js';

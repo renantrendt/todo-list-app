@@ -3,26 +3,51 @@ import { fetchTasks, addTaskToDatabase, updateTask } from './supabaseClient.js';
 
 // Adicionar tarefa ao DOM e ao banco de dados
 export async function addTask(taskText) {
-    // Primeiro adiciona ao banco de dados
-    const newTask = await addTaskToDatabase({
-        taskText: taskText,
-        duration: '',
-        isPinned: false
-    });
+    console.log('Adicionando nova tarefa:', taskText);
     
-    if (newTask) {
-        // Depois adiciona ao DOM com o ID retornado
+    try {
+        // Primeiro adiciona ao banco de dados
+        console.log('Enviando tarefa para o banco de dados...');
+        const newTask = await addTaskToDatabase({
+            taskText: taskText,
+            duration: '',
+            isPinned: false
+        });
+        
+        if (newTask) {
+            console.log('Tarefa adicionada ao banco de dados com sucesso, ID:', newTask.id);
+            // Depois adiciona ao DOM com o ID retornado
+            const taskList = document.getElementById('taskList');
+            if (!taskList) {
+                console.error('Lista de tarefas não encontrada no DOM');
+                return null;
+            }
+            
+            const taskElement = createTaskElement(newTask);
+            taskList.appendChild(taskElement);
+            console.log('Tarefa adicionada ao DOM com sucesso');
+            return newTask.id;
+        } else {
+            console.warn('Falha ao adicionar tarefa ao banco de dados, usando fallback local');
+        }
+        
+        // Fallback: adicionar localmente mesmo se falhar no banco
         const taskList = document.getElementById('taskList');
-        const taskElement = createTaskElement(newTask);
+        if (!taskList) {
+            console.error('Lista de tarefas não encontrada no DOM (fallback)');
+            return null;
+        }
+        
+        const taskElement = createTaskElement({id: 'local-' + Date.now(), task_text: taskText, duration: '', is_pinned: false});
         taskList.appendChild(taskElement);
-        return newTask.id;
+        console.log('Tarefa adicionada localmente com sucesso (fallback)');
+        return null;
+    } catch (error) {
+        console.error('Erro ao adicionar tarefa:', error);
+        console.error('Detalhes do erro:', error.message || 'Sem mensagem de erro');
+        console.error('Stack trace:', error.stack || 'Sem stack trace');
+        return null;
     }
-    
-    // Fallback: adicionar localmente mesmo se falhar no banco
-    const taskList = document.getElementById('taskList');
-    const taskElement = createTaskElement(taskText);
-    taskList.appendChild(taskElement);
-    return null;
 }
 
 // Função para salvar alterações (não converte mais o tempo)

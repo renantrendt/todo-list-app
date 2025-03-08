@@ -15,7 +15,10 @@
 <body>
     <div class="main-container">
         <div class="container">
-            <h1>Lista de Tarefas</h1>
+            <div class="header-container">
+                <h1>Lista de Tarefas</h1>
+                <button id="logoutBtn" class="logout-btn"><i class="ri-logout-box-line"></i> Sair</button>
+            </div>
             <div class="input-group">
                 <input type="text" id="taskInput" placeholder="Adicione uma nova tarefa...">
                 <button id="addTaskBtn"><i class="ri-add-line"></i> Adicionar</button>
@@ -35,6 +38,8 @@
     
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/supabaseClient.js"></script>
     <script type="module" src="js/index.js"></script>
 </body>
 </html>

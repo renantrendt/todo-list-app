@@ -1,0 +1,344 @@
+/* Variáveis CSS para fácil personalização */
+:root {
+    /* Cores principais - Modo claro */
+    --primary-color: #6366f1;
+    --primary-light: #818cf8;
+    --primary-dark: #4f46e5;
+    --accent-color: #10b981;
+    --background-color: #f9fafb;
+    --card-bg: rgba(255, 255, 255, 0.8);
+    --text-color: #1f2937;
+    --text-secondary: #4b5563;
+    --border-color: rgba(209, 213, 219, 0.5);
+    --pinned-color: rgba(253, 230, 138, 0.6);
+    --shadow-color: rgba(0, 0, 0, 0.04);
+    --input-bg: rgba(255, 255, 255, 0.9);
+    --button-hover: #4f46e5;
+
+    /* Variáveis de design */
+    --border-radius: 16px;
+    --card-radius: 24px;
+    --button-radius: 12px;
+    --transition: all 0.3s ease;
+}
+
+/* Estilo para modo escuro */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-color: #818cf8;
+        --primary-light: #a5b4fc;
+        --primary-dark: #6366f1;
+        --accent-color: #34d399;
+        --background-color: #111827;
+        --card-bg: rgba(31, 41, 55, 0.8);
+        --text-color: #f9fafb;
+        --text-secondary: #d1d5db;
+        --border-color: rgba(75, 85, 99, 0.5);
+        --pinned-color: rgba(146, 64, 14, 0.4);
+        --shadow-color: rgba(0, 0, 0, 0.2);
+        --input-bg: rgba(31, 41, 55, 0.9);
+        --button-hover: #818cf8;
+    }
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 20px;
+    min-height: 100vh;
+    transition: var(--transition);
+}
+
+/* Estilos para a página de login */
+.login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: var(--card-bg);
+    border-radius: var(--card-radius);
+    box-shadow: 0 4px 20px var(--shadow-color);
+    text-align: center;
+}
+
+.login-title {
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.login-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--button-radius);
+    font-size: 16px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.login-btn:hover {
+    background-color: var(--primary-light);
+    color: white;
+}
+
+.login-btn img {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+/* Estilos para a aplicação principal */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.app-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+#logoutBtn {
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: 8px 16px;
+    border-radius: var(--button-radius);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+#logoutBtn:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border-color: #ef4444;
+}
+
+.task-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#taskInput {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--button-radius);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    font-size: 16px;
+    transition: var(--transition);
+}
+
+#taskInput:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+#durationInput {
+    width: 100px;
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--button-radius);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    font-size: 16px;
+    transition: var(--transition);
+}
+
+#durationInput:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+#addTaskBtn {
+    padding: 12px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--button-radius);
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    transform: translateY(0);
+}
+
+#addTaskBtn:hover {
+    background-color: var(--primary-dark);
+}
+
+#addTaskBtn:active {
+    transform: translateY(2px);
+}
+
+.task-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    margin-bottom: 12px;
+    background-color: var(--card-bg);
+    border-radius: var(--card-radius);
+    box-shadow: 0 2px 10px var(--shadow-color);
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
+    position: relative;
+}
+
+.task-item.pinned {
+    background-color: var(--pinned-color);
+    border-left: 4px solid #f59e0b;
+}
+
+.task-checkbox {
+    margin-right: 16px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    cursor: pointer;
+    position: relative;
+    transition: var(--transition);
+}
+
+.task-checkbox.checked {
+    background-color: var(--primary-color);
+}
+
+.task-checkbox.checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 14px;
+}
+
+.task-text {
+    flex: 1;
+    font-size: 16px;
+    color: var(--text-color);
+    transition: var(--transition);
+}
+
+.task-text.completed {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+}
+
+.task-duration {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-left: 12px;
+    padding: 4px 8px;
+    background-color: rgba(99, 102, 241, 0.1);
+    border-radius: 12px;
+}
+
+.task-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: 16px;
+}
+
+.task-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    color: var(--text-secondary);
+    transition: var(--transition);
+}
+
+.task-btn:hover {
+    color: var(--primary-color);
+    background-color: rgba(99, 102, 241, 0.1);
+}
+
+.pin-btn.pinned {
+    color: #f59e0b;
+}
+
+.delete-btn:hover {
+    color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.task-item {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Responsividade */
+@media screen and (max-width: 768px) {
+    .task-form {
+        flex-direction: column;
+    }
+    
+    #durationInput {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        padding: 12px;
+    }
+    
+    .task-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .task-actions {
+        margin-left: 0;
+        margin-top: 12px;
+        align-self: flex-end;
+    }
+    
+    .task-duration {
+        margin-left: 0;
+        margin-top: 8px;
+    }
+}

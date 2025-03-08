@@ -2,27 +2,57 @@ import { addTask, saveChangesAndConvert } from './taskOperations.js';
 
 // Inicializar eventos
 export function initializeEventHandlers() {
-    // Adicionar tarefa ao clicar no botão
-    document.getElementById('addTaskBtn').addEventListener('click', function() {
-        const taskInput = document.getElementById('taskInput');
-        const taskText = taskInput.value.trim();
-        
-        if (taskText) {
-            addTask(taskText);
-            taskInput.value = '';
+    console.log('Inicializando manipuladores de eventos...');
+    
+    try {
+        // Adicionar tarefa ao clicar no botão
+        const addTaskBtn = document.getElementById('addTaskBtn');
+        if (addTaskBtn) {
+            console.log('Botão de adicionar tarefa encontrado');
+            
+            // Adicionar evento de clique
+            addTaskBtn.onclick = function() {
+                const taskInput = document.getElementById('taskInput');
+                if (!taskInput) {
+                    console.error('Campo de entrada não encontrado');
+                    return;
+                }
+                
+                const taskText = taskInput.value.trim();
+                if (taskText) {
+                    addTask(taskText);
+                    taskInput.value = '';
+                }
+            };
+        } else {
+            console.warn('Botão de adicionar tarefa não encontrado');
         }
-    });
+    } catch (error) {
+        console.error('Erro ao configurar botão de adicionar:', error);
+    }
 
-    // Adicionar tarefa ao pressionar Enter no campo de entrada
-    document.getElementById('taskInput').addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            const taskValue = this.value;
-            if (taskValue) {
-                addTask(taskValue); // Chama a função que adiciona a tarefa
-                this.value = ''; // Limpa o campo de entrada
-            }
+    try {
+        // Adicionar tarefa ao pressionar Enter no campo de entrada
+        const taskInput = document.getElementById('taskInput');
+        if (taskInput) {
+            console.log('Campo de entrada encontrado');
+            
+            // Adicionar evento de keypress
+            taskInput.onkeypress = function(event) {
+                if (event.key === 'Enter') {
+                    const taskValue = this.value.trim();
+                    if (taskValue) {
+                        addTask(taskValue); // Chama a função que adiciona a tarefa
+                        this.value = ''; // Limpa o campo de entrada
+                    }
+                }
+            };
+        } else {
+            console.warn('Campo de entrada não encontrado');
         }
-    });
+    } catch (error) {
+        console.error('Erro ao configurar evento de tecla Enter:', error);
+    }
 
     // Adicionar evento de blur (clicar fora) para salvar e converter
     document.addEventListener('click', function(event) {

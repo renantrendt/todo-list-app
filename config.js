@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Configurações da aplicação
-export const PORT = process.env.PORT || 3001;
+export const PORT = process.env.PORT || 3002; // Alterado para 3002 para evitar conflito
 export const PUBLIC_DIR = join(__dirname, 'public');
 
 // Configuração do LiveReload

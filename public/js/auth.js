@@ -18,16 +18,41 @@ async function checkUser() {
 // Login com Google
 async function loginWithGoogle() {
     try {
+        console.log('Iniciando login com Google...');
+        console.log('URL de origem:', window.location.origin);
+        
+        // Determinar a URL de redirecionamento com base no ambiente
+        let redirectUrl;
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            // Ambiente local
+            redirectUrl = `${window.location.origin}/`;
+        } else if (window.location.hostname === 'todo-list.bernardoserrano.com') {
+            // Domínio personalizado na Vercel
+            redirectUrl = 'https://todo-list.bernardoserrano.com/';
+        } else {
+            // Outros ambientes (como o domínio padrão da Vercel)
+            redirectUrl = `${window.location.origin}/`;
+        }
+        
+        console.log('URL de redirecionamento:', redirectUrl);
+        
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: `${window.location.origin}/`
+                redirectTo: redirectUrl,
+                skipBrowserRedirect: false // Garantir que o redirecionamento do navegador ocorra
             }
         });
         
-        if (error) throw error;
+        if (error) {
+            console.error('Erro retornado pelo Supabase durante login:', error);
+            throw error;
+        }
+        
+        console.log('Login iniciado com sucesso, aguardando redirecionamento...');
     } catch (error) {
-        console.error('Erro ao fazer login:', error.message);
+        console.error('Erro ao fazer login:', error.message || 'Sem mensagem de erro');
+        console.error('Stack trace:', error.stack || 'Sem stack trace');
         alert('Erro ao fazer login. Por favor, tente novamente.');
     }
 }

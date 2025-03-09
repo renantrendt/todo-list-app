@@ -2,6 +2,13 @@
 const SUPABASE_URL = 'https://rszyboyppgxywwixxpqo.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzenlib3lwcGd4eXd3aXh4cHFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDExNTE4NTEsImV4cCI6MjA1NjcyNzg1MX0.VoPTGdmmvs7394wPU8GsQwglM5zmmJBOCRk72-g1x6g';
 
+// Verificar se estamos no ambiente local
+const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+// Definir URL de redirecionamento baseado no ambiente
+const REDIRECT_URL = isLocalhost ? 'http://localhost:3002' : 'https://todo-list.bernardoserrano.com';
+console.log('URL de redirecionamento configurada:', REDIRECT_URL);
+
 // Inicializar cliente Supabase
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -10,8 +17,11 @@ async function checkUser() {
     const { data: { user } } = await supabase.auth.getUser();
     
     if (user) {
-        // Usuário já está logado, redirecionar para a página principal
-        window.location.href = '/';
+        console.log('Usuário já está logado, redirecionando para a página principal');
+        // Usar a URL de redirecionamento salva ou a URL padrão
+        const savedRedirectUrl = localStorage.getItem('authRedirectUrl') || REDIRECT_URL;
+        console.log('Redirecionando para:', savedRedirectUrl);
+        window.location.href = savedRedirectUrl;
     }
 }
 
@@ -19,27 +29,15 @@ async function checkUser() {
 async function loginWithGoogle() {
     try {
         console.log('Iniciando login com Google...');
-        console.log('URL de origem:', window.location.origin);
+        console.log('URL de redirecionamento configurada:', REDIRECT_URL);
         
-        // Determinar a URL de redirecionamento com base no ambiente
-        let redirectUrl;
-        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-            // Ambiente local
-            redirectUrl = `${window.location.origin}/`;
-        } else if (window.location.hostname === 'todo-list.bernardoserrano.com') {
-            // Domínio personalizado na Vercel
-            redirectUrl = 'https://todo-list.bernardoserrano.com/';
-        } else {
-            // Outros ambientes (como o domínio padrão da Vercel)
-            redirectUrl = `${window.location.origin}/`;
-        }
-        
-        console.log('URL de redirecionamento:', redirectUrl);
+        // Usar a URL de redirecionamento definida globalmente
+        localStorage.setItem('authRedirectUrl', REDIRECT_URL);
         
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: redirectUrl,
+                redirectTo: REDIRECT_URL,
                 skipBrowserRedirect: false // Garantir que o redirecionamento do navegador ocorra
             }
         });

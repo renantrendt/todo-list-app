@@ -58,5 +58,27 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/auth.js"></script>
+    <script>
+        // Script para garantir redirecionamento correto
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar se estamos no ambiente local
+            const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            
+            // Definir URL de redirecionamento baseado no ambiente
+            const redirectUrl = isLocalhost ? 'http://localhost:3002' : 'https://todo-list.bernardoserrano.com';
+            
+            console.log('Ambiente detectado:', isLocalhost ? 'localhost' : 'produção');
+            console.log('URL de redirecionamento configurada:', redirectUrl);
+            
+            // Salvar no localStorage para uso após autenticação
+            localStorage.setItem('authRedirectUrl', redirectUrl);
+            
+            // Verificar hash da URL para detectar retorno da autenticação
+            if (window.location.hash.includes('access_token')) {
+                console.log('Token de acesso detectado, redirecionando...');
+                window.location.href = redirectUrl;
+            }
+        });
+    </script>
 </body>
 </html>
